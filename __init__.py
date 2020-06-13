@@ -18,18 +18,16 @@ Then::
     3
 """
 
+import copy
 import logging
 import uuid
-import copy
-import sys
-import types
-
 
 logger = logging.getLogger(__name__)
 
 
 _name = 'k3confloader'
 __version__ = '0.1.0'
+
 
 def try_load():
     """
@@ -77,24 +75,24 @@ class ConfGetter(object):
     """
 
     defaults = dict(
-            uid                  = None,
-            gid                  = None,
-            log_dir              = None,
-            cat_stat_dir         = None,
-            zk_acl               = None,              # (('xp', '123', 'cdrwa'), ('foo', 'bar', 'rw'))
-            zk_auth              = None,              # ('digest', 'xp', '123')
-            iostat_stat_path     = '/tmp/pykit-iostat',
-            zk_hosts             = '127.0.0.1:21811',
-            zk_lock_dir          = 'lock/',
-            zk_node_id           = '%012x' % uuid.getnode(),
-            zk_record_dir        = 'record/',
-            zk_tx_dir            = 'tx/',
-            zk_seq_dir           = 'seq/',
-            zk_tx_timeout        = 365 * 24 * 3600,
-            rp_cli_nwr           = (3, 2, 2),
-            rp_cli_ak_sk         = ('access_key', 'secret_key'),
-            ec_block_port        = 6000,
-            inner_ip_patterns    = ['^172[.]1[6-9].*', '^172[.]2[0-9].*', '^172[.]3[0-1].*', '^10[.].*', '^192[.]168[.].*'],
+        uid=None,
+        gid=None,
+        log_dir=None,
+        cat_stat_dir=None,
+        zk_acl=None,              # (('xp', '123', 'cdrwa'), ('foo', 'bar', 'rw'))
+        zk_auth=None,              # ('digest', 'xp', '123')
+        iostat_stat_path='/tmp/pykit-iostat',
+        zk_hosts='127.0.0.1:21811',
+        zk_lock_dir='lock/',
+        zk_node_id='%012x' % uuid.getnode(),
+        zk_record_dir='record/',
+        zk_tx_dir='tx/',
+        zk_seq_dir='seq/',
+        zk_tx_timeout=365 * 24 * 3600,
+        rp_cli_nwr=(3, 2, 2),
+        rp_cli_ak_sk=('access_key', 'secret_key'),
+        ec_block_port=6000,
+        inner_ip_patterns=['^172[.]1[6-9].*', '^172[.]2[0-9].*', '^172[.]3[0-1].*', '^10[.].*', '^192[.]168[.].*'],
     )
 
     def __init__(self):
@@ -110,5 +108,6 @@ class ConfGetter(object):
         v = getattr(self.loaded, k, df)
         v = copy.deepcopy(v)
         return v
+
 
 conf = ConfGetter()

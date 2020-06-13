@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-this-package
-==========
+k3confloader
+============
 
 pykit3 is is a collection of toolkit in python3.
 
@@ -15,24 +15,17 @@ pykit3 is is a collection of toolkit in python3.
 Documentation for the Code
 **************************
 
-.. automodule:: this-package
+.. automodule:: k3confloader
 
 
-Exceptions
-----------
+Classes
+-------
 
-.. autoexception::  CalledProcessError
-.. autoexception::  ProcError
-.. autoexception::  TimeoutExpired
-
+.. autoclass::  ConfGetter
 
 Functions
 ---------
 
-.. autofunction::  command
-.. autofunction::  command_ex
-.. autofunction::  shell_script
-.. autofunction::  start_process
 
 Indices and tables
 ==================

@@ -1,29 +1,24 @@
-# pk3proc
+# k3confloader
 
-[![Build Status](https://travis-ci.com/pykit3/pk3proc.svg?branch=master)](https://travis-ci.com/pykit3/pk3proc)
-[![Documentation Status](https://readthedocs.org/projects/pk3proc/badge/?version=stable)](https://pk3proc.readthedocs.io/en/stable/?badge=stable)
+[![Build Status](https://travis-ci.com/pykit3/k3confloader.svg?branch=master)](https://travis-ci.com/pykit3/k3confloader)
+[![Documentation Status](https://readthedocs.org/projects/k3confloader/badge/?version=stable)](https://k3confloader.readthedocs.io/en/stable/?badge=stable)
+[![Package](https://img.shields.io/pypi/pyversions/k3confloader)](https://pypi.org/project/k3confloader)
 
-no desc
+k3confloader loads conf for other pykit3 modules
+
+k3confloader is a component of [pykit3] project: a python3 toolkit set.
+
 
 # Install
 
 ```
-pip install pk3proc
+pip install k3confloader
 ```
 
 # Synopsis
 
 ```python
-import pk3proc
 
-# execute a shell script
-returncode, out, err = pk3proc.shell_script('ls / | grep bin')
-print returncode
-print out
-# output:
-# > 0
-# > bin
-# > sbin
 ```
 
 #   Author
@@ -35,3 +30,6 @@ Zhang Yanpo (张炎泼) <drdr.xp@gmail.com>
 The MIT License (MIT)
 
 Copyright (c) 2015 Zhang Yanpo (张炎泼) <drdr.xp@gmail.com>
+
+
+[pykit3]: https://github.com/pykit3

@@ -4,6 +4,7 @@
 import doctest
 import imp
 import os
+import sys
 
 import jinja2
 import yaml
@@ -13,9 +14,13 @@ this_base = os.path.dirname(__file__)
 
 j2vars = {}
 
+# let it be able to find indirectly dependent package locally
+# e.g.: `k3fs` depends on `k3confloader`
+sys.path.insert(0, os.path.abspath('..'))
+
 # load package name from __init__.py
 pkg = imp.load_source("_foo", '__init__.py')
-j2vars["name"] = pkg._name
+j2vars["name"] = pkg.__name__
 
 
 def get_gh_config():
@@ -42,7 +47,19 @@ def get_examples(pkg):
         rst.append('>>> ' + e.source.strip())
         rst.append(e.want.strip())
 
-    return '\n'.join(rst)
+    rst = '\n'.join(rst)
+
+    for fn in ("synopsis.txt",
+               "synopsis.py",
+               ):
+        try:
+            with open(fn, 'r') as f:
+                rst += '\n' + f.read()
+
+        except FileNotFoundError:
+            pass
+
+    return rst
 
 
 j2vars['synopsis'] = get_examples(pkg)

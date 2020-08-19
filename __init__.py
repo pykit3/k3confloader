@@ -25,7 +25,7 @@ import uuid
 logger = logging.getLogger(__name__)
 
 
-_name = 'k3confloader'
+__name__ = 'k3confloader'
 __version__ = '0.1.0'
 
 

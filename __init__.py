@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 __name__ = 'k3confloader'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 def try_load():

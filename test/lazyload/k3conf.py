@@ -1,4 +1,4 @@
 import sys
 
-print('should not be here')
+print("should not be here")
 sys.exit(1)

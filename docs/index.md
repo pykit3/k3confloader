@@ -4,32 +4,29 @@
 [![Documentation Status](https://readthedocs.org/projects/k3confloader/badge/?version=stable)](https://k3confloader.readthedocs.io/en/stable/?badge=stable)
 [![Package](https://img.shields.io/pypi/pyversions/k3confloader)](https://pypi.org/project/k3confloader)
 
-k3confloader loads conf for other pykit3 modules
+Load configuration for pykit3 modules. k3confloader tries to load a python file `k3conf.py` and expects it to contain configuration.
 
-k3confloader is a component of [pykit3] project: a python3 toolkit set.
+k3confloader is a component of [pykit3](https://github.com/pykit3) project: a python3 toolkit set.
 
+## Installation
 
-# Install
-
-```
+```bash
 pip install k3confloader
 ```
 
-# Synopsis
+## Quick Start
 
 ```python
+# Setup config: echo 'uid=3' > k3conf.py
 
+import k3confloader
+print(k3confloader.conf.uid)  # 3
 ```
 
-#   Author
+## API Reference
 
-Zhang Yanpo (张炎泼) <drdr.xp@gmail.com>
+::: k3confloader
 
-#   Copyright and License
+## License
 
-The MIT License (MIT)
-
-Copyright (c) 2015 Zhang Yanpo (张炎泼) <drdr.xp@gmail.com>
-
-
-[pykit3]: https://github.com/pykit3
+The MIT License (MIT) - Copyright (c) 2015 Zhang Yanpo (张炎泼)

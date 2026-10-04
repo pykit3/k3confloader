@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 """
 k3confloader loads conf for other pykit3 modules.
 k3confloader tries to load a python file `k3conf.py` and expected it contains configuration.
@@ -22,6 +19,7 @@ import copy
 import logging
 import uuid
 from importlib.metadata import version
+from typing import ClassVar
 
 __version__ = version("k3confloader")
 
@@ -44,7 +42,7 @@ def try_load():
     return k3conf
 
 
-class ConfGetter(object):
+class ConfGetter:
     """
     This is a lazy loader that tries to import `k3conf.py` when configure
     attributes are read.
@@ -75,26 +73,26 @@ class ConfGetter(object):
 
     """
 
-    defaults = dict(
-        uid=None,
-        gid=None,
-        log_dir="/tmp",
-        cat_stat_dir=None,
-        zk_acl=None,  # (('xp', '123', 'cdrwa'), ('foo', 'bar', 'rw'))
-        zk_auth=None,  # ('digest', 'xp', '123')
-        iostat_stat_path="/tmp/pykit-iostat",
-        zk_hosts="127.0.0.1:21811",
-        zk_lock_dir="lock/",
-        zk_node_id="%012x" % uuid.getnode(),
-        zk_record_dir="record/",
-        zk_tx_dir="tx/",
-        zk_seq_dir="seq/",
-        zk_tx_timeout=365 * 24 * 3600,
-        rp_cli_nwr=(3, 2, 2),
-        rp_cli_ak_sk=("access_key", "secret_key"),
-        ec_block_port=6000,
-        inner_ip_patterns=["^172[.]1[6-9].*", "^172[.]2[0-9].*", "^172[.]3[0-1].*", "^10[.].*", "^192[.]168[.].*"],
-    )
+    defaults: ClassVar[dict] = {
+        "uid": None,
+        "gid": None,
+        "log_dir": "/tmp",
+        "cat_stat_dir": None,
+        "zk_acl": None,  # (('xp', '123', 'cdrwa'), ('foo', 'bar', 'rw'))
+        "zk_auth": None,  # ('digest', 'xp', '123')
+        "iostat_stat_path": "/tmp/pykit-iostat",
+        "zk_hosts": "127.0.0.1:21811",
+        "zk_lock_dir": "lock/",
+        "zk_node_id": f"{uuid.getnode():012x}",
+        "zk_record_dir": "record/",
+        "zk_tx_dir": "tx/",
+        "zk_seq_dir": "seq/",
+        "zk_tx_timeout": 365 * 24 * 3600,
+        "rp_cli_nwr": (3, 2, 2),
+        "rp_cli_ak_sk": ("access_key", "secret_key"),
+        "ec_block_port": 6000,
+        "inner_ip_patterns": ["^172[.]1[6-9].*", "^172[.]2[0-9].*", "^172[.]3[0-1].*", "^10[.].*", "^192[.]168[.].*"],
+    }
 
     def __init__(self):
         self.loaded = None

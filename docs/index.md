@@ -20,6 +20,7 @@ pip install k3confloader
 # Setup config: echo 'uid=3' > k3conf.py
 
 import k3confloader
+
 print(k3confloader.conf.uid)  # 3
 ```
 

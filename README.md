@@ -9,6 +9,23 @@ k3confloader loads conf for other pykit3 modules
 k3confloader is a component of [pykit3] project: a python3 toolkit set.
 
 
+k3confloader loads conf for other pykit3 modules.
+k3confloader tries to load a python file `k3conf.py` and expected it contains configuration.
+
+Usage:
+
+Setup config::
+
+    echo 'uid=3' > k3conf.py
+
+Then::
+
+    import k3confloader
+    print(k3confloader.conf.uid)
+    3
+
+
+
 # Install
 
 ```

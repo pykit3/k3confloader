@@ -37,7 +37,7 @@ def try_load():
         logger.info(
             'k3conf not found by "import k3conf".'
             " Using default config."
-            ' You can create file "pykitconf.py" to define default config for pykit.'
+            ' You can create file "k3conf.py" to define default config for pykit.'
         )
     return k3conf
 

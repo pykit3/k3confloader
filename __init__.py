@@ -32,7 +32,10 @@ def try_load():
     """
     try:
         import k3conf
-    except ImportError:
+    except ModuleNotFoundError as e:
+        # A k3conf.py that fails to import its own dependencies must not look like a missing k3conf.
+        if e.name != "k3conf":
+            raise
         k3conf = object()
         logger.info(
             'k3conf not found by "import k3conf".'

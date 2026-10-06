@@ -96,6 +96,19 @@ class TestConfLoader(unittest.TestCase):
             self.assertEqual("should not be here", e.stderr.strip())
             self.assertEqual(1, e.returncode)
 
+    def test_import_error_inside_k3conf(self):
+        # test/import_error/k3conf.py imports a module that does not exist.
+        code, _out, err = k3proc.command(
+            "python",
+            "-c",
+            "import k3confloader as cl; print(cl.conf.uid)",
+            check=False,
+            cwd=os.path.join(this_base, "import_error"),
+        )
+
+        self.assertEqual(1, code)
+        self.assertIn("ModuleNotFoundError: No module named 'k3conf_missing_dependency'", err)
+
     def _test_get_conf(self, k, v, cwd=None):
         code, out, err = k3proc.command(
             "python",

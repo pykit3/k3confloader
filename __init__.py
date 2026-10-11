@@ -97,6 +97,11 @@ class ConfGetter:
         self.loaded = None
 
     def __getattr__(self, k):
+        # copy.deepcopy() and pickle look up special names, such as __setstate__, on an instance built without
+        # __init__(), so `loaded` may be missing too. Neither is a configuration attribute.
+        if k == "loaded" or (k.startswith("__") and k.endswith("__")):
+            raise AttributeError(k)
+
         if self.loaded is None:
             self.loaded = try_load()
 

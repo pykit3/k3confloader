@@ -96,6 +96,17 @@ class TestConfLoader(unittest.TestCase):
             self.assertEqual("should not be here", e.stderr.strip())
             self.assertEqual(1, e.returncode)
 
+    def test_deepcopy(self):
+        _code, out, _err = k3proc.command(
+            "python",
+            "-c",
+            "import copy; import k3confloader as cl; print(copy.deepcopy(cl.conf).log_dir)",
+            check=True,
+            cwd=os.path.join(this_base, "configured"),
+        )
+
+        self.assertEqual("/tmp2", out.strip())
+
     def test_import_error_inside_k3conf(self):
         # test/import_error/k3conf.py imports a module that does not exist.
         code, _out, err = k3proc.command(

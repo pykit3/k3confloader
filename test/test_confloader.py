@@ -82,19 +82,30 @@ class TestConfLoader(unittest.TestCase):
 
         self.assertEqual("1", out.strip())
 
-        # When reading attributes, there should be an error
+        # Reading an attribute imports test/lazyload/k3conf.py, which prints and exits with 1.
+        code, out, err = k3proc.command(
+            "python",
+            "-c",
+            "import k3confloader as cl; print(cl.conf.uid)",
+            check=False,
+            cwd=os.path.join(this_base, "lazyload"),
+        )
 
-        try:
-            k3proc.command(
-                "python",
-                "-c",
-                "import k3confloader as cl; print(cl.conf.uid)",
-                check=False,
-                cwd=os.path.join(this_base, "lazyload"),
-            )
-        except k3proc.CalledProcessError as e:
-            self.assertEqual("should not be here", e.stderr.strip())
-            self.assertEqual(1, e.returncode)
+        self.assertEqual(1, code)
+        self.assertEqual("should not be here\n", out)
+        self.assertEqual("", err)
+
+    def test_returned_value_is_a_copy(self):
+        _code, out, _err = k3proc.command(
+            "python",
+            "-c",
+            "import k3confloader as cl; cl.conf.inner_ip_patterns.append('x'); print(cl.conf.inner_ip_patterns)",
+            check=True,
+        )
+
+        self.assertEqual(
+            "['^172[.]1[6-9].*', '^172[.]2[0-9].*', '^172[.]3[0-1].*', '^10[.].*', '^192[.]168[.].*']\n", out
+        )
 
     def test_deepcopy(self):
         _code, out, _err = k3proc.command(

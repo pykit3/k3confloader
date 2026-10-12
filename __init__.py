@@ -111,6 +111,13 @@ class ConfGetter:
         v = copy.deepcopy(v)
         return v
 
+    def __deepcopy__(self, memo):
+        # After the first read, `loaded` is the k3conf module, and a module cannot be deep-copied. The copy
+        # shares it, because every read already returns a copy of the value.
+        cp = ConfGetter()
+        cp.loaded = self.loaded
+        return cp
+
 
 conf = ConfGetter()
 

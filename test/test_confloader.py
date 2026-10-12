@@ -118,6 +118,18 @@ class TestConfLoader(unittest.TestCase):
 
         self.assertEqual("/tmp2", out.strip())
 
+    def test_deepcopy_after_read(self):
+        # The first read loads the k3conf module into conf.
+        _code, out, _err = k3proc.command(
+            "python",
+            "-c",
+            "import copy; import k3confloader as cl; print(cl.conf.uid); print(copy.deepcopy(cl.conf).log_dir)",
+            check=True,
+            cwd=os.path.join(this_base, "configured"),
+        )
+
+        self.assertEqual("1\n/tmp2\n", out)
+
     def test_import_error_inside_k3conf(self):
         # test/import_error/k3conf.py imports a module that does not exist.
         code, _out, err = k3proc.command(

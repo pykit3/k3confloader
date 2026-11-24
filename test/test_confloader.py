@@ -1,6 +1,5 @@
 import os
 import unittest
-import uuid
 
 import k3proc
 import k3ut
@@ -22,7 +21,6 @@ class TestConfLoader(unittest.TestCase):
             "iostat_stat_path": "/tmp/pykit-iostat",
             "zk_hosts": "127.0.0.1:21811",
             "zk_lock_dir": "lock/",
-            "zk_node_id": f"{uuid.getnode():012x}",
             "zk_record_dir": "record/",
             "zk_tx_dir": "tx/",
             "zk_seq_dir": "seq/",
@@ -41,6 +39,19 @@ class TestConfLoader(unittest.TestCase):
 
         for k, v in defaults.items():
             self._test_get_conf(k, str(v))
+
+    def test_default_zk_node_id(self):
+        # On a host without a MAC address, uuid.getnode() returns a random number that differs in each process.
+        # So the expected value is read in the process that reads the conf.
+        _code, out, _err = k3proc.command(
+            "python",
+            "-c",
+            "import uuid; import k3confloader as cl; print(cl.conf.zk_node_id); print(f'{uuid.getnode():012x}')",
+            check=True,
+        )
+
+        got, want = out.split()
+        self.assertEqual(want, got)
 
     def test_configured(self):
         defaults = {
